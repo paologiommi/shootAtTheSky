@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A shot in the dark → Firmamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .coords {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>A shot in the (cosmic) dark (|b| &gt; 10°)</h2>
+
+<button onclick="generateCoords()">Shoot</button>
+
+<div class="coords" id="coords"></div>
+
+<script>
+// Constants for Galactic conversion (J2000)
+const raNGP  = 192.85948 * Math.PI / 180;
+const decNGP = 27.12825  * Math.PI / 180;
+const lOmega = 32.93192  * Math.PI / 180;
+
+function randomRA() {
+  return Math.random() * 360;
+}
+
+function randomDec() {
+  return Math.random() * 180 - 90;
+}
+
+// Convert RA/Dec (deg) → Galactic latitude b (deg)
+function equatorialToGalacticB(raDeg, decDeg) {
+  const ra  = raDeg  * Math.PI / 180;
+  const dec = decDeg * Math.PI / 180;
+
+  const sinb =
+    Math.sin(dec) * Math.sin(decNGP) +
+    Math.cos(dec) * Math.cos(decNGP) * Math.cos(ra - raNGP);
+
+  return Math.asin(sinb) * 180 / Math.PI;
+}
+
+function generateCoords() {
+  let ra, dec, b;
+
+  // Keep trying until |b| > 10°
+  do {
+    ra  = randomRA();
+    dec = randomDec();
+    b   = equatorialToGalacticB(ra, dec);
+  } while (Math.abs(b) <= 10);
+
+  ra  = ra.toFixed(5);
+  dec = dec.toFixed(5);
+  b   = b.toFixed(2);
+
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.564&minor=0.564&major=0.564&angle=0.0`;
+
+  document.getElementById("coords").innerHTML =
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${b}°`;
+
+  // 🚀 Open Firmamento automatically
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
