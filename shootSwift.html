@@ -78,7 +78,7 @@ function generateCoords() {
   dec = dec.toFixed(5);
   b   = b.toFixed(2);
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.15&minor=0.15&major=0.15&angle=0.0`;
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.2&minor=0.15&major=0.15&angle=0.0`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${b}°`;
