@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A shot at Swift blazar candidates → Firmamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .coords {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>A shot at Swift-XRT blazar candidates at (|b| &gt; 10°)</h2>
+
+<button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
+  <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="50">
+</button>
+
+<div class="coords" id="coords"></div>
+
+<script>
+// Constants for Galactic conversion (J2000)
+const raNGP  = 192.85948 * Math.PI / 180;
+const decNGP = 27.12825  * Math.PI / 180;
+
+let coordTable = [];
+
+// Load CSV table
+async function loadCoords() {
+  const response = await fetch("https://paologiommi.github.io/shootAtTheSky/eFEDScandidates.csv");
+  const text = await response.text();
+
+  const lines = text.trim().split("\n").slice(1); // skip header
+
+  coordTable = lines.map(line => {
+    const [name,ra, dec] = line.split(",");
+    return {
+      ra: parseFloat(ra),
+      dec: parseFloat(dec)
+    };
+  });
+}
+
+// Convert RA/Dec → Galactic latitude
+function equatorialToGalacticB(raDeg, decDeg) {
+
+  const ra  = raDeg  * Math.PI / 180;
+  const dec = decDeg * Math.PI / 180;
+
+  const sinb =
+    Math.sin(dec) * Math.sin(decNGP) +
+    Math.cos(dec) * Math.cos(decNGP) * Math.cos(ra - raNGP);
+
+  return Math.asin(sinb) * 180 / Math.PI;
+}
+
+function generateCoords() {
+
+  if (coordTable.length === 0) {
+    alert("Coordinate table not loaded yet");
+    return;
+  }
+
+  let ra, dec, b, entry;
+
+  do {
+    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+    ra = entry.ra;
+    dec = entry.dec;
+    b = equatorialToGalacticB(ra, dec);
+  } while (Math.abs(b) <= 10);
+
+  ra  = ra.toFixed(5);
+  dec = dec.toFixed(5);
+  b   = b.toFixed(2);
+
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.2&minor=0.15&major=0.15&angle=0.0`;
+
+  document.getElementById("coords").innerHTML =
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${b}°`;
+
+  window.open(url, "_blank");
+}
+
+// Load coordinates when page starts
+loadCoords();
+</script>
+</body>
+</html>
