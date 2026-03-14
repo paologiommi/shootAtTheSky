@@ -90,7 +90,7 @@ function generateCoords() {
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
 
-  window.open(url, "_blank");
+  window.location = url;
 }
 
 // Start everything
