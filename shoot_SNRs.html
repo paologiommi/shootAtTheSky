@@ -69,25 +69,47 @@ function equatorialToGalacticB(raDeg, decDeg) {
   return Math.asin(sinb) * 180 / Math.PI;
 }
 
+// Convert RA/Dec → Galactic longitude (degrees)
+function equatorialToGalacticL(raDeg, decDeg) {
+
+  const ra  = raDeg  * Math.PI / 180;
+  const dec = decDeg * Math.PI / 180;
+
+  const lOmega = 122.932 * Math.PI / 180;
+
+  const y = Math.cos(dec) * Math.sin(ra - raNGP);
+
+  const x =
+      Math.sin(dec) * Math.cos(decNGP) -
+      Math.cos(dec) * Math.sin(decNGP) * Math.cos(ra - raNGP);
+
+  let l = lOmega - Math.atan2(y, x);   // ← corrected sign
+
+  // normalize to 0–360°
+  l = (l + 2 * Math.PI) % (2 * Math.PI);
+
+  return l * 180 / Math.PI;
+}
 
 function generateCoords() {
 
   if (!coordTable.length) return;
 
-  let entry, b;
+  let entry, b, l;
 
   do {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
+    l = equatorialToGalacticL(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 10 || entry.dec < -30);
+  while (Number(entry.dec) < -30 || l < 180);
 
   const name  = entry.name;
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
 
-  const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.2&html=Details.html&source=${name}&lang=English&item=galaxy`;
+  const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.5&html=Details.html&source=${name}&lang=English&item=galaxy`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
