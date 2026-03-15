@@ -80,7 +80,7 @@ function generateCoords() {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 10 && entry.dec > -30);
+  while (Math.abs(b) <= 10 || entry.dec > -30);
 
   const name  = entry.name;
   const ra  = entry.ra.toFixed(5);
