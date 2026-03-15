@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>A shot at SNRs → Firmamento</title>
+  <title>Show images in Firmamento</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h2>A shot at SUpernovae Remnants </h2>
+<h2>Show sources in Firmamento </h2>
 
 <button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
   <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="55">
@@ -45,6 +45,7 @@ async function loadCoords() {
     .map(line => {
       const [name,ra,dec] = line.split(",");
       return {
+        name: name,
         ra: parseFloat(ra),
         dec: parseFloat(dec)
       };
@@ -79,13 +80,14 @@ function generateCoords() {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 10);
+  while (Math.abs(b) <= 10 && entry.dec > -30);
 
+  const name  = entry.name;
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}`;
+  const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.2&html=Details.html&source=${name}&lang=English&item=galaxy`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
