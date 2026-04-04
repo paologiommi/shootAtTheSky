@@ -46,8 +46,8 @@ async function loadCoords() {
       const [name,ra,dec] = line.split(",");
       return {
         ra: parseFloat(ra),
-        dec: parseFloat(dec)
-        name : name
+        dec: parseFloat(dec),
+        name: name.trim(),
       };
     });
 
@@ -85,6 +85,7 @@ function generateCoords() {
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
+  const name = entry.name;
 
   const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&name=${name}`;
 
