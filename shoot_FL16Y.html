@@ -86,12 +86,12 @@ function generateCoords() {
   }
   while (Math.abs(b) <= 10);
 
-  const ra  = entry.ra.toFixed(5);
-  const dec = entry.dec.toFixed(5);
-  const major = entry.major.toFixed(1);
-  const minor = entry.minor.toFixed(1);
+  const ra  = entry.ra.toFixed(4);
+  const dec = entry.dec.toFixed(4);
+  const major = entry.major.toFixed(2);
+  const minor = entry.minor.toFixed(2);
   const angle = entry.angle.toFixed(1);
-  const fov = (major * 1.3).toFixed(1);
+  const fov = (major * 1.3).toFixed(3);
   const bval = b.toFixed(2);
   const name = entry.name;
 
