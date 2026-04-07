@@ -95,7 +95,7 @@ function generateCoords() {
   const bval = b.toFixed(2);
   const name = entry.name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=${fov}&major=${major}&minor=${minor}&angle=${angle}`;
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?name==${name}&ra=${ra}&dec=${dec}&fov=${fov}&major=${major}&minor=${minor}&angle=${angle}`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
