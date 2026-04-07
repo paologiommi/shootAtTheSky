@@ -47,8 +47,8 @@ async function loadCoords() {
       return {
         ra: parseFloat(ra),
         dec: parseFloat(dec),
-        major: parseFloat(major),
-        minor: parseFloat(minor),
+        major: parseFloat(major)*60,
+        minor: parseFloat(minor)*60,
         angle: parseFloat(angle),
         name: name.trim()
       };
