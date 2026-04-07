@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Show 2FLAT sources data in Firmamento</title>
+  <title>Show FL16Y gamma-ray error regions in Firmamento</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -54,6 +54,8 @@ async function loadCoords() {
       };
     });
 
+  alert('url '+url)
+
   // Automatically fire when ready
   generateCoords();
 }
@@ -95,7 +97,6 @@ function generateCoords() {
   const name = entry.name;
 
   const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=${fov}&major=${major}&minor=${minor}&angle=${angle}`;
-  alert (url)
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
 
