@@ -84,7 +84,7 @@ function generateCoords() {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 1);
+  while (Math.abs(b) <= 10);
 
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
@@ -96,8 +96,10 @@ function generateCoords() {
   const name = entry.name;
 
   const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=${fov}&major=${major}&minor=${minor}&angle=${angle}`;
+
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
+     alert('url '+url);
 
   window.location = url;
 }
