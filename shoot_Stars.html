@@ -18,11 +18,6 @@
 
 <h2>Wait to load data from Firmamento </h2>
 
-
-<!--button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
-  <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="55">
-</button-->
-
 <div class="coords" id="coords"></div>
 
 
@@ -100,7 +95,7 @@ function generateCoords() {
   const bval = b.toFixed(2);
   const name = entry.name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.3&minor=0.3&major=0.3&angle=0`;
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.2&minor=0.2&major=0.2&angle=0`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
