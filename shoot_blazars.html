@@ -55,11 +55,12 @@ async function loadCoords() {
     .map(line => {
       let ra, dec, name;
 
-      if (type == "TEV") {
-         const [ra,dec,name] = line.split(",");
+      if (type === "TEV") {
+        [ra, dec, name] = line.split(",");
       } else {
-         const [name,ra,dec] = line.split(",");
+        [name, ra, dec] = line.split(",");
       }
+
       return {
         ra: parseFloat(ra),
         dec: parseFloat(dec),
