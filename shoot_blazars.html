@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blazars → Firmamento</title>
+  <title>A shot at eROSITA-eFEDS blazar candidates → Firmamento</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -84,11 +84,12 @@ function generateCoords() {
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
+  const name = entry.name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}`;
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}`;
 
   document.getElementById("coords").innerHTML =
-    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> Blazar name = ${name}`;
 
   window.location = url;
 }
