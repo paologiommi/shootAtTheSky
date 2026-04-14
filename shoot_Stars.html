@@ -19,9 +19,9 @@
 <h2>Wait to load data from Firmamento </h2>
 
 
-<button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
+<!--button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
   <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="55">
-</button>
+</button-->
 
 <div class="coords" id="coords"></div>
 
@@ -42,12 +42,12 @@ async function loadCoords() {
   
   let csvFile;
 
-  if (type === "early") {
+  if (type == "early") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/earlyTypeStars.csv");
-  } else if (type === "intermediate") {
+  } else if (type == "intermediate") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/intermediateTypeStars.csv");
-  } else if (type === "late") {
-     csvFile = "https://paologiommi.github.io/shootAtTheSky/ilateTypeStars.csv");
+  } else if (type == "late") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/lateTypeStars.csv");
   }
 
   const response = await fetch(csvFile);
@@ -98,11 +98,12 @@ function generateCoords() {
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
+  const name = entry.name;
 
   const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.3&minor=0.3&major=0.3&angle=0`;
 
   document.getElementById("coords").innerHTML =
-    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
 
   window.location = url;
 }
