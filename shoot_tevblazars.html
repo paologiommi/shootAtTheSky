@@ -18,9 +18,9 @@
 
 <h2>Wait to load data for a TeV-detected blazar </h2>
 
-<button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
-  <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="55">
-</button>
+//<button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
+//  <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="55">
+//</button>
 
 <div class="coords" id="coords"></div>
 
@@ -90,7 +90,9 @@ function generateCoords() {
   const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}`;
 
   document.getElementById("coords").innerHTML =
-    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° \\
+     Blazar name = ${name}`;
+    
 
   window.location = url;
 }
