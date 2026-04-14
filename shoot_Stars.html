@@ -43,11 +43,11 @@ async function loadCoords() {
   let csvFile;
 
   if (type == "early") {
-     csvFile = "https://paologiommi.github.io/shootAtTheSky/earlyTypeStars.csv");
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/earlyTypeStars.csv";
   } else if (type == "intermediate") {
-     csvFile = "https://paologiommi.github.io/shootAtTheSky/intermediateTypeStars.csv");
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/intermediateTypeStars.csv";
   } else if (type == "late") {
-     csvFile = "https://paologiommi.github.io/shootAtTheSky/lateTypeStars.csv");
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/lateTypeStars.csv";
   }
 
   const response = await fetch(csvFile);
