@@ -44,6 +44,8 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/HBL-Blazars.csv"; 
   } else if  (type === "TEV") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/TevCatBlazars.csv"; 
+  } else if  (type === "Clusters") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/abellClusters.csv"; 
   }
  
   const response = await fetch(csvFile); 
