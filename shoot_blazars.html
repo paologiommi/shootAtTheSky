@@ -36,17 +36,17 @@ async function loadCoords() {
 
   let csvFile;
 
-  if (type === "LBL") {
+  if (type == "LBL") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/LBL-Blazars.csv";
-  } else if  (type === "IBL") {
+  } else if  (type == "IBL") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/IBL-Blazars.csv"; 
-  } else if  (type === "HBL") {
+  } else if  (type == "HBL") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/HBL-Blazars.csv"; 
-  } else if  (type === "TEV") {
+  } else if  (type == "TEV") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/TevCatBlazars.csv"; 
-  } else if  (type === "FRI") {
+  } else if  (type == "FRI") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/FRI_Catalog.csv"; 
-  } else if  (type === "FRII") {
+  } else if  (type == "FRII") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/FRII_Catalog.csv"; 
   }
  
@@ -57,6 +57,7 @@ async function loadCoords() {
     .split("\n")
     .slice(1)
     .map(line => {
+
       let ra, dec, name;
 
       if (type === "TEV") {
