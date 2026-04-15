@@ -60,7 +60,7 @@ async function loadCoords() {
 
       let ra, dec, name;
 
-      if (type === "TEV") or (type === "FRI"){
+      if (type === "TEV") || (type === "FRI"){
         [ra, dec, name] = line.split(",");
       } else {
         [name, ra, dec] = line.split(",");
