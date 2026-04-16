@@ -56,7 +56,8 @@ async function loadCoords() {
     .map(line => {
 
       let ra, dec, name;
-      const [name,ra,dec] = line.split(",");
+      [name, ra, dec] = line.split(",").map(s => s.trim());
+
       return {
         name: name,
         ra: parseFloat(ra),
