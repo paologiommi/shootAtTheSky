@@ -59,9 +59,9 @@ async function loadCoords() {
       [name, ra, dec] = line.split(",").map(s => s.trim());
 
       return {
-        name: name,
         ra: parseFloat(ra),
-        dec: parseFloat(dec)
+        dec: parseFloat(dec),
+        name: name.trim(),
       };
     });
 
