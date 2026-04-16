@@ -56,8 +56,12 @@ async function loadCoords() {
     .map(line => {
 
       let ra, dec, name;
-      [name, ra, dec] = line.split(",").map(s => s.trim());
 
+      if (["NGC", "NGC"].includes(type)) {
+         [ra, dec,name] = line.split(",").map(s => s.trim());
+      }else{
+         [name, ra, dec] = line.split(",").map(s => s.trim());
+      }
       return {
         ra: parseFloat(ra),
         dec: parseFloat(dec),
