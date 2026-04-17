@@ -24,7 +24,7 @@
 <script>
 
 const urlParams = new URLSearchParams(window.location.search);
-const type = urlParams.get("type") || "default";
+const type = urlParams.get("sample") || "";
 
 // Galactic conversion constants (J2000)
 const raNGP  = 192.85948 * Math.PI / 180;
@@ -42,8 +42,8 @@ async function loadCoords() {
 
     .split("\n")
     .slice(1)
+    .filter(line => line.includes(type))
     .map(line => {
-
       let ra, dec, name, erass1_name;
 
       [name,ra,dec,erass1_name] = line.split(",");
