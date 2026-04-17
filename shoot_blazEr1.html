@@ -46,7 +46,8 @@ async function loadCoords() {
       const [name,ra,dec,name_erass1] = line.split(",");
       return {
         ra: parseFloat(ra),
-        dec: parseFloat(dec)
+        dec: parseFloat(dec),
+        name: name.trim(),
       };
     });
 
