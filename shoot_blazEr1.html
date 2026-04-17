@@ -36,11 +36,15 @@ let coordTable = [];
 // Load CSV
 async function loadCoords() {
 
-  if (sample == "NOT_IN_BRERASS") {
-     const response = await fetch("https://paologiommi.github.io/shootAtTheSky/not_in_brerass.csv");
+  let csvFile;
+
+  if (sample === "NOT_IN_BRERASS") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/not_in_brerass.csv";
   } else {
-     const response = await fetch("https://paologiommi.github.io/shootAtTheSky/blazEr1.csv");
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/blazEr1.csv";
   }
+
+  const response = await fetch(csvFile);
   const text = await response.text();
 
   coordTable = text.trim()
