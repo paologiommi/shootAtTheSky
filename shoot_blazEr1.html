@@ -97,7 +97,8 @@ function generateCoords() {
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> Source name = ${name} <br> eRASS1 name = ${erass1_name}`;
 
-  window.open(url, "_blank");
+  //window.open(url, "_blank");
+  window.location = url;
 }
 
 // Start everything
