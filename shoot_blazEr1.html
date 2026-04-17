@@ -40,14 +40,16 @@ async function loadCoords() {
   const text = await response.text();
 
   coordTable = text.trim()
+    let ra, dec, name, erass1_name;
     .split("\n")
     .slice(1)
     .map(line => {
-      const [name,ra,dec,name_erass1] = line.split(",");
+      [name,ra,dec,erass1_name] = line.split(",");
       return {
         ra: parseFloat(ra),
         dec: parseFloat(dec),
         name: name.trim(),
+        erass1_name: erass1_name.trim(),
       };
     });
 
@@ -85,8 +87,10 @@ function generateCoords() {
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
+  const name = entry.name;
+  const erass1_name = entry.erass1_name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?name${name}&ra=${ra}&dec=${dec}&fov=0.2&minor=0.15&major=0.15&angle=0.0`;
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}&fov=0.2&minor=0.15&major=0.15&angle=0.0`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
