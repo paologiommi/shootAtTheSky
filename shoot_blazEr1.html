@@ -18,14 +18,13 @@
 
 <h2>A shot at BlazEr1 blazars  </h2>
 
-<button onclick="generateCoords()" style="border:none; background:none; padding:0; cursor:pointer;">
-  <img src="https://paologiommi.github.io/shootAtTheSky/shoot.jpg" width="55">
-</button>
-
 <div class="coords" id="coords"></div>
 
 
 <script>
+
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get("type") || "default";
 
 // Galactic conversion constants (J2000)
 const raNGP  = 192.85948 * Math.PI / 180;
@@ -40,10 +39,13 @@ async function loadCoords() {
   const text = await response.text();
 
   coordTable = text.trim()
-    let ra, dec, name, erass1_name;
+
     .split("\n")
     .slice(1)
     .map(line => {
+
+      let ra, dec, name, erass1_name;
+
       [name,ra,dec,erass1_name] = line.split(",");
       return {
         ra: parseFloat(ra),
