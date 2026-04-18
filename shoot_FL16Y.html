@@ -46,6 +46,7 @@ async function loadCoords() {
      "https://paologiommi.github.io/shootAtTheSky/1FLAT-Sources.csv";
   }
 
+  const response = await fetch(csvFile);
   const text = await response.text();
 
   coordTable = text.trim()
