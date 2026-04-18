@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h2>A shot at 1FLAT gamma-ray blazars </h2>
+<h2>Wait to load data from Firmamento </h2>
 
 
 <div class="coords" id="coords"></div>
@@ -36,14 +36,14 @@ let coordTable = [];
 // Load CSV
 async function loadCoords() {
 
-    let csvFile;
+  let csvFile;
 
   if (type === "1FLAT") {
-     "https://paologiommi.github.io/shootAtTheSky/1FLAT-Sources.csv";
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/1FLAT-Sources.csv";
   } else if (type === "2FLAT") {
-     "https://paologiommi.github.io/shootAtTheSky/2FLAT-Sources.csv";
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/2FLAT-Sources.csv";
   } else if (type === "FL16Y") {
-     "https://paologiommi.github.io/shootAtTheSky/1FLAT-Sources.csv";
+    csvFile = "https://paologiommi.github.io/shootAtTheSky/1FLAT-Sources.csv";
   }
 
   const response = await fetch(csvFile);
