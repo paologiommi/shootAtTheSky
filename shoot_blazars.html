@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>A shot at blazar → Firmamento</title>
+  <title>A shot at blazars → Firmamento</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h2>Wait to load data from Firmamento </h2>
+<!--h2>Wait to load data from Firmamento </h2-->
 
 <div class="coords" id="coords"></div>
 
@@ -110,6 +110,9 @@ function generateCoords() {
   const name = entry.name;
 
   const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}`;
+
+  document.getElementById("title").innerText =
+    `${type} source selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> Source name = ${name}`;
