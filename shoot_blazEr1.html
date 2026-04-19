@@ -104,7 +104,7 @@ function generateCoords() {
   const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}&fov=0.15&minor=0.15&major=0.15&angle=0.0`;
 
   document.getElementById("title").innerText =
-    `${type} source selected - Loading data from Firmamento`;
+    `${type} source from ${sample} sample, selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> Source name = ${name} <br> eRASS1 name = ${erass1_name}`;
