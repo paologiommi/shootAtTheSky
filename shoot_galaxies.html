@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h2>Wait to load data from Firmamento</h2>
+<h2 id="title">Loading source data...</h2>
 
 <div class="coords" id="coords"></div>
 
@@ -106,6 +106,9 @@ function generateCoords() {
   const bval = b.toFixed(2);
 
   const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=galaxy`;
+
+  document.getElementById("title").innerText =
+    `${type} source selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
