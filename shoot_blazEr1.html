@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>A shot at BlazEr1 → Firmamento</title>
+  <title>A shot at BlazEr1 data → Firmamento</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -25,7 +25,7 @@
 
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type") || "";
-const sample = urlParams.get("sample") || "";
+const sample = urlParams.get("sample") || "BlazEr1";
 
 // Galactic conversion constants (J2000)
 const raNGP  = 192.85948 * Math.PI / 180;
@@ -104,7 +104,7 @@ function generateCoords() {
   const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}&fov=0.15&minor=0.15&major=0.15&angle=0.0`;
 
   document.getElementById("title").innerText =
-    `${type} source from ${sample} sample, selected - Loading data from Firmamento`;
+    `Source from ${sample}-${type} sample, selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> Source name = ${name} <br> eRASS1 name = ${erass1_name}`;
