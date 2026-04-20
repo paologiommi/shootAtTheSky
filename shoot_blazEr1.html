@@ -101,13 +101,13 @@ function generateCoords() {
   }
   while (Math.abs(b) <= 10);
 
-  const ra  = entry.ra.toFixed(5);
-  const dec = entry.dec.toFixed(5);
+  const ra  = entry.ra.toFixed(4);
+  const dec = entry.dec.toFixed(4);
   const bval = b.toFixed(2);
   const name = entry.name;
   const erass1_name = entry.erass1_name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}&fov=0.15&minor=0.15&major=0.15&angle=0.0`;
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}&fov=0.55&minor=0.17&major=0.17&angle=0.0`;
 
   document.getElementById("title").innerText =
     `Source from ${sample}-${type} sample, selected - Loading data from Firmamento`;
