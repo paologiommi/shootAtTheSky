@@ -43,6 +43,8 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/intermediateTypeStars.csv";
   } else if (type == "late") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/lateTypeStars.csv";
+  } else if (type == "PlanetaryNebulae") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
   }
 
   const response = await fetch(csvFile);
@@ -52,7 +54,11 @@ async function loadCoords() {
     .split("\n")
     .slice(1)
     .map(line => {
-      const [ra,dec,name] = line.split(",");
+      if (type == "PlanetaryNebulae") {
+         const [name,ra,dec] = line.split(",");
+      } else {
+         const [ra,dec,name] = line.split(",");
+      }
       return {
         ra: parseFloat(ra),
         dec: parseFloat(dec),
