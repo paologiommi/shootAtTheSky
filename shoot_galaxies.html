@@ -45,6 +45,8 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/SpiralGalaxies.csv";
   } else if  (type === "irregular") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/IrregularGalaxies.csv";
+  } else if  (type === "PlanetaryNebulae") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
   }
 
   const response = await fetch(csvFile);
@@ -105,7 +107,12 @@ function generateCoords() {
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
 
-  const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=galaxy`;
+  let url;
+  if (type === "PlanetaryNebulae") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PlanetaryNebulae`;
+  } else {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=galaxy`;
+  }
 
   document.getElementById("title").innerText =
     `${type} source selected - Loading data from Firmamento`;
