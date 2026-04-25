@@ -54,10 +54,13 @@ async function loadCoords() {
     .split("\n")
     .slice(1)
     .map(line => {
+
+      let name, ra, dec;
+
       if (type == "PlanetaryNebulae") {
-         const [name,ra,dec] = line.split(",");
+         [name,ra,dec] = line.split(",");
       } else {
-         const [ra,dec,name] = line.split(",");
+         [ra,dec,name] = line.split(",");
       }
       return {
         ra: parseFloat(ra),
