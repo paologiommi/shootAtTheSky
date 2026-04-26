@@ -54,6 +54,8 @@ async function loadCoords() {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/erassNoRadio.csv";
   } else if (type === "RFC") {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/rfc4shooting.csv";
+  } else if (type === "ICE_CUBE") {
+    csvFile = "https://paologiommi.github.io/shootAtTheSky/IceCube.csv";
   } else {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/fl16y.csv";
   }
@@ -88,6 +90,7 @@ async function loadCoords() {
         if (type === "1FLAT" || type === "2FLAT") {
 
           [name, ra, dec] = cols;
+
         } else if (type === "ICE_CUBE") {
    
           [name, ra, dec, major, minor, angle] = cols;
