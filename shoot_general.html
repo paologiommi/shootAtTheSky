@@ -173,7 +173,8 @@ function generateCoords() {
   const minor = entry.minor.toFixed(2);
   const angle = entry.angle.toFixed(1);
   const name  = entry.name;
-  const fov   = (major * 1.3).toFixed(3);
+  //const fov   = (major * 1.3).toFixed(3);
+  const fov   = entry.fov.toFixed(3);
 
   let url;
 
