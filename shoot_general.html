@@ -88,6 +88,14 @@ async function loadCoords() {
         if (type === "1FLAT" || type === "2FLAT") {
 
           [name, ra, dec] = cols;
+        } else if (type === "ICE_CUBE") {
+   
+          [name, ra, dec, major, minor, angle] = cols;
+
+          major = parseFloat(major) * 60.0;
+          minor = parseFloat(minor) * 60.0;
+          angle = parseFloat(angle);
+          fov   = major * 1.1;
 
         } else {
 
@@ -185,7 +193,6 @@ function generateCoords() {
       `?name=${name}` +
       `&ra=${ra}` +
       `&dec=${dec}`;
-  }
 
 
   document.getElementById("title").innerText =
