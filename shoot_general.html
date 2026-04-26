@@ -95,8 +95,8 @@ async function loadCoords() {
    
           [name, ra, dec, major, minor, angle] = cols;
 
-          major = parseFloat(major) * 60.0;
-          minor = parseFloat(minor) * 60.0;
+          major = parseFloat(major);
+          minor = parseFloat(minor);
           angle = parseFloat(angle);
           fov   = major * 1.1;
 
