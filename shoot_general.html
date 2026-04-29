@@ -57,7 +57,7 @@ async function loadCoords() {
   } else if (type === "ICE_CUBE") {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/IceCube.csv";
   } else if (type === "ICECAT2PREVIEW") {
-    csvFile = "https://paologiommi.github.io/shootAtTheSky/IceCube.csv";
+    csvFile = "https://paologiommi.github.io/shootAtTheSky/IceCat2Preview.csv";
   } else {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/fl16y.csv";
   }
@@ -92,8 +92,6 @@ async function loadCoords() {
         if (type === "1FLAT" || type === "2FLAT") {
 
           [name, ra, dec] = cols;
-          ra: parseFloat(ra),
-          dec: parseFloat(dec),
 
         } else if (type === "ICE_CUBE" || type === "ICECAT2PREVIEW") {
    
@@ -116,6 +114,8 @@ async function loadCoords() {
 
         return {
           name: name,
+          ra: parseFloat(ra),
+          dec: parseFloat(dec),
           major: major,
           minor: minor,
           angle: angle,
