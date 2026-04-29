@@ -92,6 +92,8 @@ async function loadCoords() {
         if (type === "1FLAT" || type === "2FLAT") {
 
           [name, ra, dec] = cols;
+          ra: parseFloat(ra),
+          dec: parseFloat(dec),
 
         } else if (type === "ICE_CUBE" || type === "ICECAT2PREVIEW") {
    
@@ -114,12 +116,10 @@ async function loadCoords() {
 
         return {
           name: name,
-          ra: parseFloat(ra),
-          dec: parseFloat(dec),
-          major: parseFloat(major),
-          minor: parseFloat(minor),
-          angle: parseFloat(angle),
-          fov: parseFloat(fov)
+          major: major,
+          minor: minor,
+          angle: angle,
+          fov: fov
         };
       });
 
