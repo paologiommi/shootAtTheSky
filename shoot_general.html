@@ -58,6 +58,10 @@ async function loadCoords() {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/IceCube.csv";
   } else if (type === "ICECAT2PREVIEW") {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/IceCat2Preview.csv";
+  } else if (type === "SY1") {
+    csvFile = "https://paologiommi.github.io/shootAtTheSky/Seyfert1.csv";
+  } else if (type === "SY2") {
+    csvFile = "https://paologiommi.github.io/shootAtTheSky/Seyfert2.csv";
   } else {
     csvFile = "https://paologiommi.github.io/shootAtTheSky/fl16y.csv";
   }
@@ -89,7 +93,7 @@ async function loadCoords() {
 
         const cols = line.split(",").map(x => x.trim());
 
-        if (type === "1FLAT" || type === "2FLAT") {
+        if (type === "1FLAT" || type === "2FLAT" || type === "SY1" || type === "SY2" ) {
 
           [name, ra, dec] = cols;
 
