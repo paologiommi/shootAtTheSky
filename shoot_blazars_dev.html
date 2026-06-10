@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A shot at blazars → Firmamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .coords {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2 id="title">Loading source data...</h2>
+<!--h2>Wait to load data from Firmamento </h2-->
+
+<div class="coords" id="coords"></div>
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get("type") || "LBL";
+
+// Galactic conversion constants (J2000)
+const raNGP  = 192.85948 * Math.PI / 180;
+const decNGP = 27.12825  * Math.PI / 180;
+
+let coordTable = [];
+
+// Load CSV
+async function loadCoords() {
+
+  let csvFile;
+
+  if (type === "LBL") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/LBL-Blazars.csv";
+  } else if  (type === "IBL") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/IBL-Blazars.csv"; 
+  } else if  (type === "HBL") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/HBL-Blazars.csv"; 
+  } else if  (type === "TEV") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/TevCatBlazars.csv"; 
+  } else if  (type === "FRI") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/FRI_Catalog.csv"; 
+  } else if  (type === "FRII") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/FRII_Catalog.csv"; 
+  } else if  (type === "RadioPulsar") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/ATNF_Pulsars.csv"; 
+  } else if  (type === "GammaRayPulsar") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/Fermi3PSR.csv"; 
+  }
+ 
+  const response = await fetch(csvFile); 
+  const text = await response.text();
+
+  coordTable = text.trim()
+    .split("\n")
+    .slice(1)
+    .map(line => {
+
+      let ra, dec, name;
+
+      if (["TEV", "FRI"].includes(type)) {
+        [ra, dec, name] = line.split(",");
+      } else {
+        [name, ra, dec] = line.split(",");
+      }
+
+      return {
+        ra: parseFloat(ra),
+        dec: parseFloat(dec),
+        name: name.trim(),
+      };
+    });
+
+  // Automatically fire when ready
+  generateCoords();
+}
+
+
+// Convert RA/Dec → Galactic latitude
+function equatorialToGalacticB(raDeg, decDeg) {
+
+  const ra  = raDeg  * Math.PI / 180;
+  const dec = decDeg * Math.PI / 180;
+
+  const sinb =
+    Math.sin(dec) * Math.sin(decNGP) +
+    Math.cos(dec) * Math.cos(decNGP) * Math.cos(ra - raNGP);
+
+  return Math.asin(sinb) * 180 / Math.PI;
+}
+
+
+function generateCoords() {
+
+  if (!coordTable.length) return;
+
+  let entry, b, b_limit,dec_limit;
+  dec_limit = -90
+  if (type === "RadioPulsar") or (type === "GammaRayPulsar"){
+    b_limit = 0
+  } else {
+    b_limit = 10
+  }
+
+
+  do {
+    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+    b = equatorialToGalacticB(entry.ra, entry.dec);
+  }
+  while (Math.abs(b) <= b_limit);
+
+  const ra  = entry.ra.toFixed(5);
+  const dec = entry.dec.toFixed(5);
+  const bval = b.toFixed(2);
+  const name = entry.name;
+
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?name=${name}&ra=${ra}&dec=${dec}`;
+
+  document.getElementById("title").innerText =
+    `${type} source selected - Loading data from Firmamento`;
+
+  document.getElementById("coords").innerHTML =
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> Source name = ${name}`;
+
+  window.location = url;
+}
+
+// Start everything
+loadCoords();
+
+</script>
+</body>
+</html>
