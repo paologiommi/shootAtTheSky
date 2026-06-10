@@ -48,7 +48,6 @@ async function loadCoords() {
   } else if  (type === "PlanetaryNebulae") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
   } else if  (type === "PWNe") {
-     alert('Loading PWNe table')
      csvFile = "https://paologiommi.github.io/shootAtTheSky/PulsarWindNebulae.csv";
   }
 
@@ -100,12 +99,14 @@ function generateCoords() {
   if (!coordTable.length) return;
 
   let entry, b;
-
-  do {
-    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
-    b = equatorialToGalacticB(entry.ra, entry.dec);
-  }
-  while (Math.abs(b) <= 10 || entry.dec < -30);
+  if (type === "PWNe") {
+     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+  else 
+     do {
+       entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+       b = equatorialToGalacticB(entry.ra, entry.dec);
+     }
+     while (Math.abs(b) <= 10 || entry.dec < -30);
 
   const name  = entry.name;
   const ra  = entry.ra.toFixed(5);
