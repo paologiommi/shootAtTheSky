@@ -49,6 +49,10 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/FRI_Catalog.csv"; 
   } else if  (type === "FRII") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/FRII_Catalog.csv"; 
+  } else if  (type === "RadioPulsar") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/ATNF_Pulsars.csv"; 
+  } else if  (type === "GammaRayPulsar") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/Fermi3PSR.csv"; 
   }
  
   const response = await fetch(csvFile); 
@@ -97,13 +101,19 @@ function generateCoords() {
 
   if (!coordTable.length) return;
 
-  let entry, b;
+  let entry, b, b_limit,dec_limit;
+  dec_limit = -90
+  if (["RadioPulsar", "GammaRayPulsar"].includes(type)) {
+    b_limit = 0;
+  } else {
+    b_limit = 10;
+  }
 
   do {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 10);
+  while (Math.abs(b) <= b_limit);
 
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
