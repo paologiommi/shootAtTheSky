@@ -61,7 +61,7 @@ async function loadCoords() {
 
       let ra, dec, name;
 
-      if (["NGC", "NGC"].includes(type)) {
+      if (["NGC", "NGC", "PWNe"].includes(type)) {
          [ra, dec,name] = line.split(",").map(s => s.trim());
       }else{
          [name, ra, dec] = line.split(",").map(s => s.trim());
