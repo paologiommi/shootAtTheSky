@@ -103,13 +103,13 @@ function generateCoords() {
      entry = coordTable[Math.floor(Math.random() * coordTable.length)];
      b = equatorialToGalacticB(entry.ra, entry.dec);
      alert('entry '+entry)
-  else 
+  } else {
      do {
        entry = coordTable[Math.floor(Math.random() * coordTable.length)];
        b = equatorialToGalacticB(entry.ra, entry.dec);
      }
      while (Math.abs(b) <= 10 || entry.dec < -30);
-
+  }
   const name  = entry.name;
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
