@@ -47,6 +47,8 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/IrregularGalaxies.csv";
   } else if  (type === "PlanetaryNebulae") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
+  } else if  (type === "PWNe") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/PulsrWindNebulae.csv";
   }
 
   const response = await fetch(csvFile);
@@ -110,6 +112,8 @@ function generateCoords() {
   let url;
   if (type === "PlanetaryNebulae") {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PlanetaryNebulae`;
+  } else if (type === "PWNe") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=Chandra&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PulsarWindNebula`;
   } else {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=galaxy`;
   }
