@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Show images in Firmamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .coords {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2 id="title">Loading source data...</h2>
+
+<div class="coords" id="coords"></div>
+
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get("type") || "default";
+
+// Galactic conversion constants (J2000)
+const raNGP  = 192.85948 * Math.PI / 180;
+const decNGP = 27.12825  * Math.PI / 180;
+
+let coordTable = [];
+
+// Load CSV
+async function loadCoords() {
+
+  let csvFile;
+
+  if (type === "NGC") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/ngc.csv";
+  } else if  (type === "elliptical") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/EllipticalGalaxies.csv";
+  } else if  (type === "spiral") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/SpiralGalaxies.csv";
+  } else if  (type === "irregular") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/IrregularGalaxies.csv";
+  } else if  (type === "PlanetaryNebulae") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
+  } else if  (type === "PWNe") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/PulsarWindNebulae.csv";
+  }
+
+  const response = await fetch(csvFile);
+  const text = await response.text();
+
+  coordTable = text.trim()
+    .split("\n")
+    .slice(1)
+    .map(line => {
+
+      let ra, dec, name;
+
+      if (["NGC", "PWNe"].includes(type)) {
+         [ra, dec,name] = line.split(",").map(s => s.trim());
+      }else{
+         [name, ra, dec] = line.split(",").map(s => s.trim());
+      }
+      return {
+        ra: parseFloat(ra),
+        dec: parseFloat(dec),
+        name: name.trim(),
+      };
+    });
+
+  // Automatically fire when ready
+  generateCoords();
+}
+
+
+// Convert RA/Dec → Galactic latitude
+function equatorialToGalacticB(raDeg, decDeg) {
+
+  const ra  = raDeg  * Math.PI / 180;
+  const dec = decDeg * Math.PI / 180;
+
+  const sinb =
+    Math.sin(dec) * Math.sin(decNGP) +
+    Math.cos(dec) * Math.cos(decNGP) * Math.cos(ra - raNGP);
+
+  return Math.asin(sinb) * 180 / Math.PI;
+}
+
+
+function generateCoords() {
+
+  if (!coordTable.length) return;
+
+  let entry, b, b_limit,de_limit;
+  if (type === "PWNe") {
+    b_limit = 0
+    dec_limit = -90
+  } else {
+    b_limit = 10
+    dec_limit = -30
+  }
+    
+  do {
+    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+    b = equatorialToGalacticB(entry.ra, entry.dec);
+  }
+  while (Math.abs(b) <= b_limit || entry.dec < dec_limit);
+
+  const name  = entry.name;
+  const ra  = entry.ra.toFixed(5);
+  const dec = entry.dec.toFixed(5);
+  const bval = b.toFixed(2);
+
+  let url;
+  if (type === "PlanetaryNebulae") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PlanetaryNebulae`;
+  } else if (type === "PWNe") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=Chandra&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PulsarWindNebula`;
+ } else {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=galaxy`;
+  }
+
+  document.getElementById("title").innerText =
+    `${type} source selected - Loading data from Firmamento`;
+
+  document.getElementById("coords").innerHTML =
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}°`;
+
+  window.location = url;
+}
+
+// Start everything
+loadCoords();
+
+</script>
+</body>
+</html>
