@@ -103,12 +103,11 @@ function generateCoords() {
 
   let entry, b, b_limit,dec_limit;
   dec_limit = -90
-  if (type === "RadioPulsar") || (type === "GammaRayPulsar"){
-    b_limit = 0
+  if (["RadioPulsar", "GammaRayPulsar"].includes(type)) {
+    b_limit = 0;
   } else {
-    b_limit = 10
+    b_limit = 10;
   }
-
 
   do {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
