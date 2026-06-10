@@ -111,6 +111,7 @@ function generateCoords() {
   const bval = b.toFixed(2);
 
   let url;
+  alert('Type '+type)
   if (type === "PlanetaryNebulae") {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PlanetaryNebulae`;
   } else if (type === "PWNe") {
