@@ -101,6 +101,7 @@ function generateCoords() {
   let entry, b;
   if (type === "PWNe") {
      entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+     b = equatorialToGalacticB(entry.ra, entry.dec);
      alert('entry '+entry)
   else 
      do {
