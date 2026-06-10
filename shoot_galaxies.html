@@ -48,6 +48,7 @@ async function loadCoords() {
   } else if  (type === "PlanetaryNebulae") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
   } else if  (type === "PWNe") {
+     alert('Loading PWNe table')
      csvFile = "https://paologiommi.github.io/shootAtTheSky/PulsarWindNebulae.csv";
   }
 
@@ -64,6 +65,7 @@ async function loadCoords() {
       if (["NGC", "PWNe"].includes(type)) {
          alert ('Here ')
          [ra, dec, name] = line.split(",").map(s => s.trim());
+         alert('ra, dec, name '+ra+dec+name)
       }else{
          [name, ra, dec] = line.split(",").map(s => s.trim());
       }
