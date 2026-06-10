@@ -47,6 +47,8 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/IrregularGalaxies.csv";
   } else if  (type === "PlanetaryNebulae") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
+  } else if  (type === "PWNe") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/PulsarWindNebulae.csv";
   }
 
   const response = await fetch(csvFile);
@@ -59,8 +61,10 @@ async function loadCoords() {
 
       let ra, dec, name;
 
-      if (["NGC", "NGC"].includes(type)) {
-         [ra, dec,name] = line.split(",").map(s => s.trim());
+      if (["NGC", "PWNe"].includes(type)) {
+         alert ('Here '+line)
+         [ra, dec, name] = line.split(",").map(s => s.trim());
+         alert('ra, dec, name '+ra+dec+name)
       }else{
          [name, ra, dec] = line.split(",").map(s => s.trim());
       }
@@ -95,21 +99,28 @@ function generateCoords() {
   if (!coordTable.length) return;
 
   let entry, b;
-
-  do {
-    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
-    b = equatorialToGalacticB(entry.ra, entry.dec);
+  if (type === "PWNe") {
+     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+     b = equatorialToGalacticB(entry.ra, entry.dec);
+     alert(`entry ra=${entry.ra}, dec=${entry.dec}`);
+  } else {
+     do {
+       entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+       b = equatorialToGalacticB(entry.ra, entry.dec);
+     }
+     while (Math.abs(b) <= 10 || entry.dec < -30);
   }
-  while (Math.abs(b) <= 10 || entry.dec < -30);
-
   const name  = entry.name;
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
 
   let url;
+  alert('Type '+type)
   if (type === "PlanetaryNebulae") {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PlanetaryNebulae`;
+  } else if (type === "PWNe") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=Chandra&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=PulsarWindNebula`;
   } else {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=PanSTARRS&ra=${ra}&dec=${dec}&fov=0.1&html=Details.html&source=${name}&lang=English&item=galaxy`;
   }
