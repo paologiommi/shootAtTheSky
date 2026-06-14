@@ -43,8 +43,6 @@ async function loadCoords() {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/intermediateTypeStars.csv";
   } else if (type == "late") {
      csvFile = "https://paologiommi.github.io/shootAtTheSky/lateTypeStars.csv";
-  } else if (type == "PlanetaryNebulae") {
-     csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
   }
 
   const response = await fetch(csvFile);
@@ -57,11 +55,7 @@ async function loadCoords() {
 
       let name, ra, dec;
 
-      if (type == "PlanetaryNebulae") {
-         [name,ra,dec] = line.split(",");
-      } else {
-         [ra,dec,name] = line.split(",");
-      }
+      [ra,dec,name] = line.split(",");
       return {
         ra: parseFloat(ra),
         dec: parseFloat(dec),
@@ -92,28 +86,30 @@ function generateCoords() {
 
   if (!coordTable.length) return;
 
-  let entry, b;
+  let entry, b, url;
 
-  do {
-    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
-    b = equatorialToGalacticB(entry.ra, entry.dec);
-  }
-  while (Math.abs(b) <= 1);
+  entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+  b = equatorialToGalacticB(entry.ra, entry.dec);
 
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
   const bval = b.toFixed(2);
-  const name = entry.name;
+  const name = 'HIP'+entry.name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.2&minor=0.2&major=0.2&angle=0`;
+  if (type === "early") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.3&html=Details.html&source=${name}&lang=English&item=EarlyTypeStar`;
+  } else if (type === "intermediate") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.3&html=Details.html&source=${name}&lang=English&item=IntermediateTypeStar`;
+  } else if (type === "late") {
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.3&html=Details.html&source=${name}&lang=English&item=LateTypeStar`;
+  }
 
   document.getElementById("title").innerText =
-    `${type} source selected - Loading data from Firmamento`;
+    `${type} type star selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
-
-  window.location = url;
+  window.location.href = url;
 }
 
 // Start everything
