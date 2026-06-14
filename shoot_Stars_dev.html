@@ -109,7 +109,8 @@ function generateCoords() {
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
-  window.location.href = url;
+  //window.location.href = url;
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 // Start everything
