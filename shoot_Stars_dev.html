@@ -98,7 +98,6 @@ function generateCoords() {
   const bval = b.toFixed(2);
   const name = 'HIP'+entry.name;
 
-  alert ('type '+type)
   if (type === "early") {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=EarlyTypeStar`;
   } else if (type === "intermediate") {
