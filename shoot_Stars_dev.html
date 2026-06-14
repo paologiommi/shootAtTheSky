@@ -86,7 +86,7 @@ function generateCoords() {
 
   if (!coordTable.length) return;
 
-  let entry, b;
+  let entry, b, url;
 
   do {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
@@ -106,13 +106,13 @@ function generateCoords() {
   } else if (type === "late") {
      const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=LateTypeStar`;
   }
+  alert ('url '+url)
 
   document.getElementById("title").innerText =
     `${type} type star selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
-  alert ('url '+url)
   window.location.href = url;
 }
 
