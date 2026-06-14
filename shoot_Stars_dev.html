@@ -100,11 +100,11 @@ function generateCoords() {
   const name = 'HIP'+entry.name;
 
   if (type === "early") {
-     const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=EarlyTypeStar`;
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=EarlyTypeStar`;
   } else if (type === "intermediate") {
-     const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=IntermediateTypeStar`;
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=IntermediateTypeStar`;
   } else if (type === "late") {
-     const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=LateTypeStar`;
+     url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=LateTypeStar`;
   }
   alert ('url '+url)
 
