@@ -99,21 +99,21 @@ function generateCoords() {
   const bval = b.toFixed(2);
   const name = 'HIP'+entry.name;
 
-  if (type == "early") {
+  if (type === "early") {
      const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=EarlyTypeStar`;
-  } else if (type == "intermediate") {
+  } else if (type === "intermediate") {
      const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=IntermediateTypeStar`;
-  } else if (type == "late") {
+  } else if (type === "late") {
      const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=LateTypeStar`;
   }
 
   document.getElementById("title").innerText =
-    `${type} source selected - Loading data from Firmamento`;
+    `${type} type star selected - Loading data from Firmamento`;
 
   document.getElementById("coords").innerHTML =
     `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
-
-  window.location = url;
+  alert ('url '+url)
+  window.location.href = url;
 }
 
 // Start everything
