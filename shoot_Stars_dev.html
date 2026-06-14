@@ -88,10 +88,8 @@ function generateCoords() {
 
   let entry, b, url;
 
-  do {
-    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
-    b = equatorialToGalacticB(entry.ra, entry.dec);
-  }
+  entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+  b = equatorialToGalacticB(entry.ra, entry.dec);
 
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
