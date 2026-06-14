@@ -92,7 +92,6 @@ function generateCoords() {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 0);
 
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
@@ -106,7 +105,6 @@ function generateCoords() {
   } else if (type === "late") {
      url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.4&html=Details.html&source=${name}&lang=English&item=LateTypeStar`;
   }
-  alert ('url '+url)
 
   document.getElementById("title").innerText =
     `${type} type star selected - Loading data from Firmamento`;
