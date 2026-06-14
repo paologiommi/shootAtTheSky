@@ -105,7 +105,7 @@ function generateCoords() {
   const bval = b.toFixed(2);
   const name = entry.name;
 
-  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.2&minor=0.2&major=0.2&angle=0`;
+  const url = `https://firmamento-nyuad-25ebad56567d.herokuapp.com/fbook/aladin_astronomy?survey=DSS2&ra=${ra}&dec=${dec}&fov=0.2&html=Details.html&source=${name}&lang=English&item=NormalStar`;
 
   document.getElementById("title").innerText =
     `${type} source selected - Loading data from Firmamento`;
