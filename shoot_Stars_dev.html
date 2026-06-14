@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A shot at stars → Firmamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .coords {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2 id="title">Loading source data...</h2>
+
+<div class="coords" id="coords"></div>
+
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get("type") || "early";
+
+// Galactic conversion constants (J2000)
+const raNGP  = 192.85948 * Math.PI / 180;
+const decNGP = 27.12825  * Math.PI / 180;
+
+let coordTable = [];
+
+// Load CSV
+async function loadCoords() {
+  
+  let csvFile;
+
+  if (type == "early") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/earlyTypeStars.csv";
+  } else if (type == "intermediate") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/intermediateTypeStars.csv";
+  } else if (type == "late") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/lateTypeStars.csv";
+  } else if (type == "PlanetaryNebulae") {
+     csvFile = "https://paologiommi.github.io/shootAtTheSky/planetaryNebulae.csv";
+  }
+
+  const response = await fetch(csvFile);
+  const text = await response.text();
+
+  coordTable = text.trim()
+    .split("\n")
+    .slice(1)
+    .map(line => {
+
+      let name, ra, dec;
+
+      if (type == "PlanetaryNebulae") {
+         [name,ra,dec] = line.split(",");
+      } else {
+         [ra,dec,name] = line.split(",");
+      }
+      return {
+        ra: parseFloat(ra),
+        dec: parseFloat(dec),
+        name : name.trim()
+      };
+    });
+
+  // Automatically fire when ready
+  generateCoords();
+}
+
+
+// Convert RA/Dec → Galactic latitude
+function equatorialToGalacticB(raDeg, decDeg) {
+
+  const ra  = raDeg  * Math.PI / 180;
+  const dec = decDeg * Math.PI / 180;
+
+  const sinb =
+    Math.sin(dec) * Math.sin(decNGP) +
+    Math.cos(dec) * Math.cos(decNGP) * Math.cos(ra - raNGP);
+
+  return Math.asin(sinb) * 180 / Math.PI;
+}
+
+
+function generateCoords() {
+
+  if (!coordTable.length) return;
+
+  let entry, b;
+
+  do {
+    entry = coordTable[Math.floor(Math.random() * coordTable.length)];
+    b = equatorialToGalacticB(entry.ra, entry.dec);
+  }
+  while (Math.abs(b) <= 1);
+
+  const ra  = entry.ra.toFixed(5);
+  const dec = entry.dec.toFixed(5);
+  const bval = b.toFixed(2);
+  const name = entry.name;
+
+  const url = `https://firmamento.nyuad.nyu.edu/data_access?ra=${ra}&dec=${dec}&fov=0.2&minor=0.2&major=0.2&angle=0`;
+
+  document.getElementById("title").innerText =
+    `${type} source selected - Loading data from Firmamento`;
+
+  document.getElementById("coords").innerHTML =
+    `RA = ${ra}°<br>Dec = ${dec}°<br>Galactic b = ${bval}° <br> star name = ${name}`;
+
+  window.location = url;
+}
+
+// Start everything
+loadCoords();
+
+</script>
+</body>
+</html>
