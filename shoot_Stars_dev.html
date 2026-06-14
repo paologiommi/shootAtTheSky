@@ -92,7 +92,7 @@ function generateCoords() {
     entry = coordTable[Math.floor(Math.random() * coordTable.length)];
     b = equatorialToGalacticB(entry.ra, entry.dec);
   }
-  while (Math.abs(b) <= 1);
+  while (Math.abs(b) <= 0);
 
   const ra  = entry.ra.toFixed(5);
   const dec = entry.dec.toFixed(5);
